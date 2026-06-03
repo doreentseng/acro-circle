@@ -26,6 +26,8 @@ export function mapEvent(raw: EventRaw): EventViewModel {
       ? {
           ...raw.location,
           id: String(raw.location.id),
+          mapUrl: raw.location.map_url,
+          officialUrl: raw.location.official_url
         }
       : ({} as LocationViewModel),
 
