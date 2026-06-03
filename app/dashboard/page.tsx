@@ -19,7 +19,7 @@ import { requireAuth } from '@/lib/auth/requireAuth';
 import { CheckboxSkeleton, RadioSkeleton } from '@/components/ui/Skeleton';
 import { useCreateEvent } from '@/services/eventService';
 import { checkboxClass, inputClass, radioClass } from '@/lib/styles/input';
-import PageHeader from '@/components/ui/PageHeadet';
+import PageHeader from '@/components/ui/PageHeader';
 import Footer from '@/components/ui/Footer';
 
 const DEFAULT_FORM = {
