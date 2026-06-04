@@ -10,7 +10,7 @@ import { CheckboxSkeleton, RadioSkeleton } from '@/components/ui/Skeleton';
 import { useCreateEvent } from '@/services/eventService';
 import { checkboxClass, inputClass, radioClass } from '@/lib/styles/input';
 
-const DEFAULT_FORM = {
+const EMPTY_FORM = {
   title: 'Acroyoga 練習',
   createdBy: '',
   eventTime: '',
@@ -31,42 +31,32 @@ export default function CreateEventSection({
   users: UserViewModel[];
   locations: LocationViewModel[];
 }) {
-  const hasInitializedUsers = useRef(false);
-  const hasInitializedLocations = useRef(false);
   const { mutate: createEvent, isPending: isCreating } = useCreateEvent();
-  const [form, setForm] = useState<EventInput>(DEFAULT_FORM);
+  const [form, setForm] = useState<EventInput>(EMPTY_FORM);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const hasInitialized = useRef(false);
+
+  const setDefaultForm = () => {
+    setForm((prev) => ({
+      ...prev,
+      userIds: ['1', '2', '3', '4'],
+      bookedBy: '3',
+      locationId: locations[0].id,
+    }));
+  };
 
   useEffect(() => {
-    if (hasInitializedUsers.current) return;
-    if (!users.length) return;
-
-    setForm((prev) => {
-      if (prev.userIds.length > 0 || prev.bookedBy) return prev;
-      hasInitializedUsers.current = true;
-
-      return {
-        ...prev,
-        userIds: ['1', '2', '3', '4'],
-        bookedBy: '3',
-      };
-    });
-  }, [users]);
-
-  useEffect(() => {
-    if (hasInitializedLocations.current) return;
     if (!locations.length) return;
+    if (hasInitialized.current) return;
 
-    setForm((prev) => {
-      if (prev.locationId) return prev;
-      hasInitializedUsers.current = true;
+    setForm((prev) => ({
+      ...prev,
+      userIds: ['1', '2', '3', '4'],
+      bookedBy: '3',
+      locationId: locations[0].id,
+    }));
 
-      return {
-        ...prev,
-        locationId: locations[0].id,
-      };
-    });
-    hasInitializedLocations.current = true;
+    hasInitialized.current = true;
   }, [locations]);
 
   const validateForm = () => {
@@ -100,7 +90,8 @@ export default function CreateEventSection({
       ...form,
       createdBy: currentUserId,
     });
-    setForm(DEFAULT_FORM);
+
+    setDefaultForm();
   };
 
   return (
