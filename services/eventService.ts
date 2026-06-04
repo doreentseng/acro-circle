@@ -6,33 +6,12 @@ import type {
 import { supabase } from '@/lib/supabase';
 import { mapEvent } from '@/lib/mappers/eventMapper';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { EVENT_SELECT } from '@/lib/constants/eventSelect';
 
 export const getEvents = async (): Promise<EventViewModel[]> => {
   const { data, error } = await supabase
     .from('events')
-    .select(
-      `
-      *,
-      event_users (
-        user:users (
-          id,
-          name
-        )
-      ),
-      location:locations (
-        id,
-        name
-      ),
-      created_by_user:users!events_created_by_fkey (
-        id,
-        name
-      ),
-      booked_by_user:users!events_booked_by_fkey (
-        id,
-        name
-      )
-    `,
-    )
+    .select(EVENT_SELECT)
     .order('event_time', { ascending: false })
     .limit(3);
 
