@@ -48,7 +48,7 @@ export default function EventSection() {
                 ${isPast ? 'bg-zinc-100 opacity-40' : 'bg-zinc-50'}
               `}
               >
-                <div className="absolute top-3 right-3">
+                <div className="lg:absolute lg:top-3 lg:right-3 static mb-2 mb-0">
                   <EventStatusBadge status={status} />
                 </div>
 
