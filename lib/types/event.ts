@@ -28,6 +28,9 @@ export interface EventViewModel {
   location: LocationViewModel;
   users: UserViewModel[];
   timeLabel: string; // e.g. 2026/06/02（星期二）19:00-21:00
+  reminder3dSent: boolean;
+  reminder1dSent: boolean;
+  lineGroupId: string;
 }
 
 export interface EventRaw {
@@ -55,6 +58,10 @@ export interface EventRaw {
   location?: LocationRaw;
   created_by_user?: UserRaw;
   booked_by_user?: UserRaw;
+
+  reminder_3d_sent: boolean;
+  reminder_1d_sent: boolean;
+  line_group_id: string;
 }
 
 export interface CreateEventPayload {

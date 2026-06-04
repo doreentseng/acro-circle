@@ -34,5 +34,9 @@ export function mapEvent(raw: EventRaw): EventViewModel {
     users: raw.event_users?.map((eu) => mapUser(eu.user)) ?? [],
 
     timeLabel: formatEventTimeToTimeLabel(raw.event_time, Number(raw.duration)),
+
+    reminder3dSent: raw.reminder_3d_sent,
+    reminder1dSent: raw.reminder_1d_sent,
+    lineGroupId: raw.line_group_id,
   };
 }
