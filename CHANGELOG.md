@@ -1,3 +1,10 @@
+## 2.0.1 - [2026-06-04]
+
+### Fixes
+
+- Improved the Footer layout
+- Prevent page scrolling to the top with location link click
+
 ## 2.0.0 - [2026-06-04]
 
 ### BREAK CHANGES
