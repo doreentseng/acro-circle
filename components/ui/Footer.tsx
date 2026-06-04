@@ -11,7 +11,7 @@ export default function Footer() {
         <CodeBracketIcon className="w-4 h-4 text-zinc-400" />
         <span>Built with Next.js + Supabase</span>
       </div>
-      <div className="flex gap-2">
+      <div className="flex flex-col items-center gap-1 md:flex-row md:gap-2">
         <div className="flex items-center gap-1">
           <HeartIcon className="w-4 h-4 text-pink-400" />
           <span>
