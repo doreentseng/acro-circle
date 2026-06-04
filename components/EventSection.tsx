@@ -13,6 +13,7 @@ import { SectionSkeleton } from './ui/Skeleton';
 import EmptyState from './ui/EmptyState';
 import { useEvents, useDeleteEvent } from '@/services/eventService';
 import { iconClass } from '@/lib/styles/icon';
+import LocationLink from './LocationLink';
 
 const NOW = Date.now();
 
@@ -105,7 +106,11 @@ export default function EventSection() {
 
                 <div className="flex gap-4 text-sm text-zinc-500">
                   <div className="text-sm text-zinc-500 flex items-center gap-1">
-                    <MapPinIcon className={iconClass} /> {event.location.name}
+                    <MapPinIcon className={iconClass} />
+                    <LocationLink
+                      key={event.location.id}
+                      location={event.location}
+                    />
                   </div>
                   <div className="text-sm text-zinc-500 flex items-center gap-1">
                     <CurrencyDollarIcon className={iconClass} /> {event.amount}
