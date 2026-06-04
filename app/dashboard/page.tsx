@@ -64,23 +64,35 @@ export default function Dashboard() {
     <div className="min-h-screen bg-zinc-100 flex justify-center px-6">
       <div className="w-full max-w-6xl py-8">
         <PageHeader />
-        <div className="grid grid-cols-7 gap-4">
-          <div className="col-span-3 space-y-4">
+
+        {/** desktop UI */}
+        <div className="hidden md:grid md:grid-cols-7 gap-4">
+          <div className="col-span-3">
             <EventSection />
           </div>
-
-          <div className="col-span-3 space-y-4">
+          <div className="col-span-3">
             <CreateEventSection
               currentUserId={currentUserId}
               users={users}
               locations={locations}
             />
           </div>
-
           <div className="col-span-1 space-y-4">
             <LocationSection locations={locations} />
             <UserSection users={users} />
           </div>
+        </div>
+
+        {/** mobile UI */}
+        <div className="flex flex-col gap-4 md:hidden">
+          <CreateEventSection
+            currentUserId={currentUserId}
+            users={users}
+            locations={locations}
+          />
+          <EventSection />
+          <LocationSection locations={locations} />
+          <UserSection users={users} />
         </div>
         <Footer />
       </div>
