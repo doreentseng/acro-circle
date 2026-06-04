@@ -7,7 +7,7 @@ import { mapUser } from '@/lib/mappers/userMapper';
 export function mapEvent(raw: EventRaw): EventViewModel {
   return {
     // base fields (from Event)
-    id: String(raw.id),
+    id: raw.id,
     title: raw.title,
     eventTime: raw.event_time,
     amount: String(raw.amount),
@@ -24,15 +24,19 @@ export function mapEvent(raw: EventRaw): EventViewModel {
       : ({} as UserViewModel),
     location: raw.location
       ? {
-          ...raw.location,
           id: String(raw.location.id),
+          name: raw.location.name,
           mapUrl: raw.location.map_url,
-          officialUrl: raw.location.official_url
+          officialUrl: raw.location.official_url,
         }
       : ({} as LocationViewModel),
 
     users: raw.event_users?.map((eu) => mapUser(eu.user)) ?? [],
 
     timeLabel: formatEventTimeToTimeLabel(raw.event_time, Number(raw.duration)),
+
+    reminder3dSent: raw.reminder_3d_sent,
+    reminder1dSent: raw.reminder_1d_sent,
+    lineGroupId: raw.line_group_id,
   };
 }

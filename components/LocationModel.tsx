@@ -8,7 +8,6 @@ type Props = {
 };
 
 export default function LocationModal({ location, onClose }: Props) {
-  console.log(location);
   if (!location) return null;
 
   return (
