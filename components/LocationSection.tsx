@@ -6,8 +6,10 @@ import LocationLink from './LocationLink';
 
 export default function LocationSection({
   locations,
+  onClickLocationLink,
 }: {
   locations: LocationViewModel[];
+  onClickLocationLink: (v: LocationViewModel) => void;
 }) {
   return (
     <div className="bg-white rounded-lg shadow-md p-5">
@@ -20,7 +22,11 @@ export default function LocationSection({
       ) : (
         <div className="mt-3 space-y-2 text-sm text-zinc-600">
           {locations.map((l) => (
-            <LocationLink key={l.id} location={l} />
+            <LocationLink
+              key={l.id}
+              location={l}
+              onClick={onClickLocationLink}
+            />
           ))}
         </div>
       )}

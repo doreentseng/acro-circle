@@ -14,6 +14,8 @@ import { requireAuth } from '@/lib/auth/requireAuth';
 import PageHeader from '@/components/ui/PageHeader';
 import Footer from '@/components/ui/Footer';
 import CreateEventSection from '@/components/CreateEventSection';
+import LocationModal from '@/components/LocationModel';
+import LocationLink from '@/components/LocationLink';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -60,15 +62,27 @@ export default function Dashboard() {
     loadUsers();
   }, [router]);
 
+  const [selectedLocation, setSelectedLocation] =
+    useState<LocationViewModel | null>(null);
+
+  const handleClickLocationLink = (v: LocationViewModel) => {
+    setSelectedLocation(v);
+  };
+
   return (
     <div className="min-h-screen bg-zinc-100 flex justify-center px-6">
       <div className="w-full max-w-6xl py-8">
         <PageHeader />
 
+        <LocationModal
+          location={selectedLocation}
+          onClose={() => setSelectedLocation(null)}
+        />
+
         {/** desktop UI */}
         <div className="hidden md:grid md:grid-cols-7 gap-4">
           <div className="col-span-3">
-            <EventSection />
+            <EventSection onClickLocationLink={handleClickLocationLink} />
           </div>
           <div className="col-span-3">
             <CreateEventSection
@@ -78,7 +92,10 @@ export default function Dashboard() {
             />
           </div>
           <div className="col-span-1 space-y-4">
-            <LocationSection locations={locations} />
+            <LocationSection
+              locations={locations}
+              onClickLocationLink={handleClickLocationLink}
+            />
             <UserSection users={users} />
           </div>
         </div>
@@ -90,8 +107,11 @@ export default function Dashboard() {
             users={users}
             locations={locations}
           />
-          <EventSection />
-          <LocationSection locations={locations} />
+          <EventSection onClickLocationLink={handleClickLocationLink} />
+          <LocationSection
+            locations={locations}
+            onClickLocationLink={handleClickLocationLink}
+          />
           <UserSection users={users} />
         </div>
         <Footer />

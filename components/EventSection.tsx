@@ -14,10 +14,15 @@ import EmptyState from './ui/EmptyState';
 import { useEvents, useDeleteEvent } from '@/services/eventService';
 import { iconClass } from '@/lib/styles/icon';
 import LocationLink from './LocationLink';
+import type { LocationViewModel } from '@/lib/types/location';
 
 const NOW = Date.now();
 
-export default function EventSection() {
+export default function EventSection({
+  onClickLocationLink,
+}: {
+  onClickLocationLink: (v: LocationViewModel) => void;
+}) {
   const { data: events, isPending: isLoading } = useEvents();
   const {
     mutate: deleteEvent,
@@ -110,6 +115,7 @@ export default function EventSection() {
                     <LocationLink
                       key={event.location.id}
                       location={event.location}
+                      onClick={onClickLocationLink}
                     />
                   </div>
                   <div className="text-sm text-zinc-500 flex items-center gap-1">
