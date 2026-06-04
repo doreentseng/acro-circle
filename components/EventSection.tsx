@@ -14,6 +14,8 @@ import EmptyState from './ui/EmptyState';
 import { useEvents, useDeleteEvent } from '@/services/eventService';
 import { iconClass } from '@/lib/styles/icon';
 
+const NOW = Date.now();
+
 export default function EventSection() {
   const { data: events, isPending: isLoading } = useEvents();
   const {
@@ -27,6 +29,47 @@ export default function EventSection() {
     deleteEvent(eventId);
   };
 
+  /**
+   * Sort events based on:
+   * 1. Whether the event is past or future
+   * 2. Distance from current time (absolute difference)
+   *
+   * Sorting rules:
+   * - Future events always appear before past events
+   * - Within each group (future / past), events are sorted by how close they are to "now"
+   *   (closer events appear first)
+   */
+  const sortedEvents = [...(events ?? [])].sort((a, b) => {
+    // Convert event time string into timestamp for comparison
+    const aTime = new Date(a.eventTime).getTime();
+    const bTime = new Date(b.eventTime).getTime();
+
+    // Determine whether each event is in the past
+    const aPast = getEventStatus(a.eventTime, a.duration) === 'past';
+    const bPast = getEventStatus(b.eventTime, b.duration) === 'past';
+
+    /**
+     * 1. Primary sort rule: group by past/future
+     * - Future events (aPast === false) should come first
+     * - Past events (aPast === true) should come later
+     */
+    if (aPast !== bPast) {
+      return aPast ? 1 : -1;
+    }
+
+    /**
+     * 2. Secondary sort rule: distance from current time
+     * We use absolute difference so both:
+     * - Upcoming events
+     * - Past events
+     * are ordered by proximity to "now"
+     */
+    const aDistance = Math.abs(NOW - aTime);
+    const bDistance = Math.abs(NOW - bTime);
+
+    return aDistance - bDistance;
+  });
+
   return (
     <div className="bg-white rounded-lg shadow-md p-5">
       <SectionTitle
@@ -37,7 +80,7 @@ export default function EventSection() {
       {!isLoading && events?.length === 0 ? <EmptyState /> : null}
       {!isLoading && events && events?.length > 0 ? (
         <div className="space-y-3">
-          {events?.map((event) => {
+          {sortedEvents?.map((event) => {
             const status = getEventStatus(event.eventTime, event.duration);
             const isPast = status === 'past';
             const isDeletingThis = isDeleting && variables === event.id;
