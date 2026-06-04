@@ -1,3 +1,19 @@
+## 2.0.0 - [2026-06-04]
+
+### BREAK CHANGES
+
+- Added a LINE Bot feature to send reminder events to LINE group users prior to scheduled events.
+
+### Changed / Refactor
+
+- Refactored event selection to use an independent constant
+- Added an underline styling to the location link
+- Added ngrok setup to the project.
+
+### Fixes
+
+- Fixed an issue causing an undefined value in events
+
 ## 1.1.2 - [2026-06-04]
 
 ### Fixes
