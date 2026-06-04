@@ -1,6 +1,14 @@
+## 1.1.1 - [2026-06-04]
+
+### Fixes
+
+- Resolved React rendering error caused by using `Date.now()` inside render phase
+- Replaced impure time access with a stable time source to ensure deterministic rendering
+- Fixed event sorting instability caused by non-deterministic time calculations
+
 ## 1.1.0 - [2026-06-04]
 
-### Fix
+### Fixes
 
 - Added missing objects in `event.location`
 - Set correct default form value to create event form
