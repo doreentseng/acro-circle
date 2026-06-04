@@ -15,11 +15,8 @@ export default function Footer() {
         <div className="flex items-center gap-1">
           <HeartIcon className="w-4 h-4 text-pink-400" />
           <span>
-            Yoga Icon by Icons8 on{' '}
-            <a
-              href="https://icon-icons.com/authors/10-icons8"
-              className="hover:text-pink-500 hover:underline"
-            >
+            Yoga Icon by Community on
+            <a href="https://icon-icons.com/authors/878-community">
               Icon-Icons.com
             </a>
           </span>
