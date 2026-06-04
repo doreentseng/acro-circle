@@ -1,3 +1,13 @@
+## 1.1.2 - [2026-06-04]
+
+### Fixes
+
+- Fixed location model under the faded layer when clicking the location link of past event
+
+### Refactor
+
+- Added LocationLink component
+
 ## 1.1.1 - [2026-06-04]
 
 ### Fixes
