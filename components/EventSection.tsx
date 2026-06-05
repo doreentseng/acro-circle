@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import { CalendarDaysIcon } from '@heroicons/react/24/solid';
 import SectionTitle from '@/components/ui/SectionTitle';
 import UserTag from '@/components/ui/UserTag';
@@ -17,8 +20,16 @@ import LocationLink from './LocationLink';
 import type { LocationViewModel } from '@/lib/types/location';
 import { cardClass } from '@/lib/styles/card';
 import { useToast } from '@/providers/ToastProvider';
+import { Alert } from './ui/Alert';
 
 const NOW = Date.now();
+
+type EventAlert = {
+  type: 'error' | 'success';
+  message: string;
+};
+
+type EventAlerts = Record<string, EventAlert>;
 
 export default function EventSection({
   onClickLocationLink,
@@ -28,17 +39,33 @@ export default function EventSection({
   const { showToast } = useToast();
   const { data: events, isPending: isLoading } = useEvents();
   const {
-    mutate: deleteEvent,
+    mutateAsync: deleteEvent,
     isPending: isDeleting,
-    variables,
+    variables: deletingEventId,
   } = useDeleteEvent();
 
-  const handleDeleteEvent = (eventId: string) => {
+  const [alerts, setAlerts] = useState<EventAlerts>({});
+
+  const handleDeleteEvent = async (eventId: string) => {
+    setAlerts((prev) => {
+      const next = { ...prev };
+      delete next[eventId];
+      return next;
+    });
+
     try {
-      deleteEvent(eventId);
-      showToast('刪除預約成功', 'delete');
+      await deleteEvent(`${eventId}`);
+      showToast('刪除成功', 'delete');
     } catch (e) {
       console.log(e);
+
+      setAlerts((prev) => ({
+        ...prev,
+        [eventId]: {
+          type: 'error',
+          message: `刪除失敗，${e.message}`,
+        },
+      }));
     }
   };
 
@@ -96,7 +123,6 @@ export default function EventSection({
           {sortedEvents?.map((event) => {
             const status = getEventStatus(event.eventTime, event.duration);
             const isPast = status === 'past';
-            const isDeletingThis = isDeleting && variables === event.id;
             return (
               <div
                 key={event.id}
@@ -165,6 +191,13 @@ export default function EventSection({
                   </div>
                 )}
 
+                {alerts[event.id] && (
+                  <Alert
+                    className="mt-5"
+                    type={alerts[event.id].type}
+                    message={alerts[event.id].message}
+                  />
+                )}
                 <button
                   className="
                     mt-4 w-40 text-xs
@@ -173,12 +206,13 @@ export default function EventSection({
                     transition cursor-pointer flex items-center gap-1
                     disabled:opacity-50 disabled:cursor-not-allowed
                   "
-                  disabled={isDeletingThis}
+                  disabled={isDeleting && event.id === deletingEventId}
                   onClick={() => handleDeleteEvent(event.id)}
                 >
                   <TrashIcon className="w-4 h-4" />
-
-                  {isDeletingThis ? '刪除中' : '刪除預約'}
+                  {isDeleting && event.id === deletingEventId
+                    ? '刪除中'
+                    : '刪除預約'}
                 </button>
               </div>
             );
