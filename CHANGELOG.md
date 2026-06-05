@@ -1,3 +1,9 @@
+## 2.2.0 - [2026-06-05]
+
+### Added
+
+- Introduced a complete toast notification system, including a Toast Provider, Toast Container, and useToast hook for global usage across the app.
+
 ## 2.1.0 - [2026-06-05]
 
 ### Changes
