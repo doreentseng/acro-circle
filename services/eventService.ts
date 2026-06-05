@@ -10,9 +10,10 @@ import { EVENT_SELECT } from '@/lib/constants/eventSelect';
 
 export const getEvents = async (): Promise<EventViewModel[]> => {
   const { data, error } = await supabase
-    .from('events')
+    .from('upcoming_events')
     .select(EVENT_SELECT)
-    .order('event_time', { ascending: false })
+    .gte('event_end', new Date().toISOString())
+    .order('event_time', { ascending: true })
     .limit(3);
 
   if (error) throw error;
