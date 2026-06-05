@@ -15,13 +15,15 @@ import PageHeader from '@/components/ui/PageHeader';
 import Footer from '@/components/ui/Footer';
 import CreateEventSection from '@/components/CreateEventSection';
 import LocationModal from '@/components/LocationModel';
-import LocationLink from '@/components/LocationLink';
+import { useToast } from '@/providers/ToastProvider';
+import { ToastContainer } from '@/components/ui/ToastContainer';
 
 export default function Dashboard() {
   const router = useRouter();
   const [currentUserId, setCurrentUserId] = useState<UserViewModel['id']>('');
   const [users, setUsers] = useState<UserViewModel[]>([]);
   const [locations, setLocations] = useState<LocationViewModel[]>([]);
+  const { toasts, removeToast } = useToast();
 
   useEffect(() => {
     requireAuth(router);
@@ -78,6 +80,7 @@ export default function Dashboard() {
           location={selectedLocation}
           onClose={() => setSelectedLocation(null)}
         />
+        <ToastContainer toasts={toasts} onClose={removeToast} />
 
         {/** desktop UI */}
         <div className="hidden md:grid md:grid-cols-7 gap-4">
