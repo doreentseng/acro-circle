@@ -16,6 +16,7 @@ import {
 } from '@/lib/styles/form';
 import { cardClass } from '@/lib/styles/card';
 import { buttonClass, primary } from '@/lib/styles/button';
+import { useToast } from '@/providers/ToastProvider';
 
 const EMPTY_FORM = {
   title: 'Acroyoga 練習',
@@ -42,6 +43,7 @@ export default function CreateEventSection({
   const [form, setForm] = useState<EventInput>(EMPTY_FORM);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const hasInitialized = useRef(false);
+  const { toasts, showToast, removeToast } = useToast();
 
   const setDefaultForm = () => {
     setForm({
@@ -88,11 +90,16 @@ export default function CreateEventSection({
     console.log('Form submitted:', form);
     console.log('Current user ID:', currentUserId);
 
-    createEvent({
-      ...form,
-      createdBy: currentUserId,
-    });
-    setDefaultForm();
+    try {
+      createEvent({
+        ...form,
+        createdBy: currentUserId,
+      });
+      setDefaultForm();
+      showToast('創建預約成功', 'success');
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

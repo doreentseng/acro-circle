@@ -16,6 +16,7 @@ import { iconClass } from '@/lib/styles/icon';
 import LocationLink from './LocationLink';
 import type { LocationViewModel } from '@/lib/types/location';
 import { cardClass } from '@/lib/styles/card';
+import { useToast } from '@/providers/ToastProvider';
 
 const NOW = Date.now();
 
@@ -24,6 +25,7 @@ export default function EventSection({
 }: {
   onClickLocationLink: (v: LocationViewModel) => void;
 }) {
+  const { showToast } = useToast();
   const { data: events, isPending: isLoading } = useEvents();
   const {
     mutate: deleteEvent,
@@ -32,8 +34,12 @@ export default function EventSection({
   } = useDeleteEvent();
 
   const handleDeleteEvent = (eventId: string) => {
-    console.log(eventId);
-    deleteEvent(eventId);
+    try {
+      deleteEvent(eventId);
+      showToast('刪除預約成功', 'delete');
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   /**
