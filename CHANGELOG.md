@@ -1,3 +1,15 @@
+## 2.3.0 - [2026-06-05]
+
+### Added
+
+- Introduced new Alert component for displaying user notifications and system messages.
+
+### Fixes
+
+- Updated events query to use upcoming_events table instead of events.
+- Filtered out expired events using event_end timestamp.
+- Adjusted sorting to display upcoming events in ascending chronological order.
+
 ## 2.2.0 - [2026-06-05]
 
 ### Added
