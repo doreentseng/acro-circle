@@ -1,3 +1,12 @@
+## 2.1.0 - [2026-06-05]
+
+### Changes
+
+- Installed next-themes
+- Added ThemeProvider to Next.js app
+- Enabled system theme detection
+- Added DARD theme
+
 ## 2.0.1 - [2026-06-04]
 
 ### Fixes
@@ -11,7 +20,7 @@
 
 - Added a LINE Bot feature to send reminder events to LINE group users prior to scheduled events.
 
-### Changed / Refactor
+### Changes / Refactor
 
 - Refactored event selection to use an independent constant
 - Added an underline styling to the location link
