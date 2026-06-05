@@ -44,24 +44,19 @@ export default function CreateEventSection({
   const hasInitialized = useRef(false);
 
   const setDefaultForm = () => {
-    setForm((prev) => ({
-      ...prev,
+    setForm({
+      ...EMPTY_FORM,
       userIds: ['1', '2', '3', '4'],
       bookedBy: '3',
       locationId: locations[0].id,
-    }));
+    });
   };
 
   useEffect(() => {
     if (!locations.length) return;
     if (hasInitialized.current) return;
 
-    setForm((prev) => ({
-      ...prev,
-      userIds: ['1', '2', '3', '4'],
-      bookedBy: '3',
-      locationId: locations[0].id,
-    }));
+    setDefaultForm();
 
     hasInitialized.current = true;
   }, [locations]);
@@ -97,7 +92,6 @@ export default function CreateEventSection({
       ...form,
       createdBy: currentUserId,
     });
-
     setDefaultForm();
   };
 
