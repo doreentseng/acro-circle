@@ -3,10 +3,11 @@ import { UsersIcon } from '@heroicons/react/24/solid';
 import SectionTitle from '@/components/ui/SectionTitle';
 import UserTag from './ui/UserTag';
 import { SectionSkeleton } from './ui/Skeleton';
+import { cardClass } from '@/lib/styles/card';
 
 export default function UserSection({ users }: { users: UserViewModel[] }) {
   return (
-    <div className="bg-white rounded-lg shadow-md p-5">
+    <div className={cardClass}>
       <SectionTitle icon={<UsersIcon className="w-5 h-5" />} title="人員清單" />
       {users.length === 0 ? (
         <SectionSkeleton size="sm" />

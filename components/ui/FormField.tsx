@@ -16,7 +16,7 @@ export default function FormField({
   return (
     <div className="space-y-1">
       {/* Label */}
-      <label className="text-sm text-zinc-600 flex items-center gap-1">
+      <label className="text-sm text-[var(--foreground)] flex items-center gap-1">
         {label}
         {required && <span className="text-red-500 text-xs">*</span>}
       </label>

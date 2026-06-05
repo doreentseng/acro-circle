@@ -3,6 +3,7 @@ import { MapPinIcon } from '@heroicons/react/24/solid';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { SectionSkeleton } from './ui/Skeleton';
 import LocationLink from './LocationLink';
+import { cardClass } from '@/lib/styles/card';
 
 export default function LocationSection({
   locations,
@@ -12,7 +13,7 @@ export default function LocationSection({
   onClickLocationLink: (v: LocationViewModel) => void;
 }) {
   return (
-    <div className="bg-white rounded-lg shadow-md p-5">
+    <div className={cardClass}>
       <SectionTitle
         icon={<MapPinIcon className="w-5 h-5" />}
         title="地點清單"
@@ -20,7 +21,7 @@ export default function LocationSection({
       {locations.length === 0 ? (
         <SectionSkeleton size="sm" />
       ) : (
-        <div className="mt-3 space-y-2 text-sm text-zinc-600">
+        <div className="mt-3 space-y-2 text-sm text-[var(--foreground)]">
           {locations.map((l) => (
             <LocationLink
               key={l.id}

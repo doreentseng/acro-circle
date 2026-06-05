@@ -12,7 +12,7 @@ export default function LocationLink({
       <a
         href="#"
         key={location.id}
-        className="flex justify-between underline hover:underline text-zinc-700 hover:text-pink-600 transition group"
+        className="flex justify-between underline hover:underline hover:text-pink-600 transition group"
         onClick={(e) => {
           e.preventDefault();
           onClick(location);

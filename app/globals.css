@@ -2,13 +2,20 @@
 
 @layer base {
   html {
-    color-scheme: light;
+    color-scheme: light dark;
   }
-}
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light mode (default) */
+  :root {
+    --background: #ffffff;
+    --foreground: #171717;
+  }
+
+  /* Dark mode */
+  .dark {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
 }
 
 @theme inline {

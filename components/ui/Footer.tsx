@@ -6,7 +6,7 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="w-full mt-10 border-t border-zinc-100 py-6 flex flex-col items-center space-y-1 text-xs text-zinc-500">
+    <footer className="w-full mt-10 py-6 flex flex-col items-center space-y-1 text-xs text-zinc-500">
       <div className="flex items-center gap-2">
         <CodeBracketIcon className="w-4 h-4 text-zinc-400" />
         <span>Built with Next.js + Supabase</span>

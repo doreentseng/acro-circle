@@ -8,7 +8,14 @@ import FormField from '@/components/ui/FormField';
 import UserTag from '@/components/ui/UserTag';
 import { CheckboxSkeleton, RadioSkeleton } from '@/components/ui/Skeleton';
 import { useCreateEvent } from '@/services/eventService';
-import { checkboxClass, inputClass, radioClass } from '@/lib/styles/input';
+import {
+  checkboxClass,
+  inputClass,
+  radioClass,
+  optionItemClass,
+} from '@/lib/styles/form';
+import { cardClass } from '@/lib/styles/card';
+import { buttonClass, primary } from '@/lib/styles/button';
 
 const EMPTY_FORM = {
   title: 'Acroyoga 練習',
@@ -95,10 +102,7 @@ export default function CreateEventSection({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white rounded-lg shadow-md p-5 space-y-3"
-    >
+    <form onSubmit={handleSubmit} className={cardClass}>
       <SectionTitle icon={<BoltIcon className="w-5 h-5" />} title="預約表單" />
 
       <FormField label="標題" required error={formErrors.title}>
@@ -138,7 +142,7 @@ export default function CreateEventSection({
       </FormField>
 
       <FormField label="參與人員" required error={formErrors.userIds}>
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-2">
           {users.length === 0 ? (
             <>
               <CheckboxSkeleton />
@@ -147,10 +151,7 @@ export default function CreateEventSection({
             </>
           ) : (
             users.map((user) => (
-              <label
-                key={user.id}
-                className="flex items-center gap-2 bg-white text-sm text-zinc-700 cursor-pointer"
-              >
+              <label key={user.id} className={optionItemClass}>
                 <input
                   type="checkbox"
                   checked={form.userIds?.includes(user.id)}
@@ -203,7 +204,7 @@ export default function CreateEventSection({
       </div>
 
       <FormField label="預定場地的人" required error={formErrors.bookedBy}>
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-2">
           {users.length === 0 ? (
             <>
               <RadioSkeleton />
@@ -212,10 +213,7 @@ export default function CreateEventSection({
             </>
           ) : (
             users.map((user) => (
-              <label
-                key={user.id}
-                className="flex items-center gap-2 bg-white text-sm text-zinc-700 cursor-pointer"
-              >
+              <label key={user.id} className={optionItemClass}>
                 <input
                   type="radio"
                   name="bookedBy"
@@ -239,12 +237,7 @@ export default function CreateEventSection({
         />
       </FormField>
 
-      <button
-        disabled={isCreating}
-        className="w-full px-4 py-2 rounded-md bg-pink-500 text-white transition cursor-pointer
-                  hover:bg-pink-400
-                  disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-pink-400"
-      >
+      <button disabled={isCreating} className={`${buttonClass} ${primary}`}>
         {isCreating ? '建立中...' : '建立預約'}
       </button>
     </form>

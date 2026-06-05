@@ -1,16 +1,16 @@
 export const CheckboxSkeleton = () => {
   return (
     <div className="flex items-center gap-2 animate-pulse">
-      <div className="h-4 w-4 rounded border border-zinc-300 bg-zinc-200" />
-      <div className="h-3 w-24 bg-zinc-200 rounded" />
+      <div className="h-4 w-4 rounded border border-zinc-300 bg-zinc-200 dark:bg-zinc-600" />
+      <div className="h-3 w-24 bg-zinc-200 dark:bg-zinc-600 rounded" />
     </div>
   );
 };
 export function RadioSkeleton() {
   return (
     <div className="flex items-center gap-2 animate-pulse">
-      <div className="h-4 w-4 rounded-full border border-zinc-300 bg-zinc-200" />
-      <div className="h-3 w-24 bg-zinc-200 rounded" />
+      <div className="h-4 w-4 rounded-full border border-zinc-300 bg-zinc-200 dark:bg-zinc-600" />
+      <div className="h-3 w-24 bg-zinc-200 dark:bg-zinc-600 rounded" />
     </div>
   );
 }
@@ -45,7 +45,7 @@ export function SectionSkeleton({ size = 'md' }: SectionSkeletonProps) {
       {Array.from({ length: config.count }).map((_, i) => (
         <div
           key={i}
-          className={`w-full rounded-md bg-zinc-200 ${config.itemHeight}`}
+          className={`w-full rounded-md bg-zinc-200 dark:bg-zinc-600 ${config.itemHeight}`}
         />
       ))}
     </div>

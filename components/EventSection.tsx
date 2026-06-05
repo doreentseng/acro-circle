@@ -15,6 +15,7 @@ import { useEvents, useDeleteEvent } from '@/services/eventService';
 import { iconClass } from '@/lib/styles/icon';
 import LocationLink from './LocationLink';
 import type { LocationViewModel } from '@/lib/types/location';
+import { cardClass } from '@/lib/styles/card';
 
 const NOW = Date.now();
 
@@ -77,7 +78,7 @@ export default function EventSection({
   });
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-5">
+    <div className={cardClass}>
       <SectionTitle
         icon={<CalendarDaysIcon className="w-5 h-5" />}
         title="最近三筆預約"
@@ -93,24 +94,30 @@ export default function EventSection({
             return (
               <div
                 key={event.id}
-                className={`relative p-4 rounded-md border border-zinc-200 space-y-2 transition
-                ${isPast ? 'bg-zinc-100 opacity-40' : 'bg-zinc-50'}
-              `}
+                className={`
+                  relative p-4 rounded-md border border-zinc-200 dark:border-zinc-800
+                  space-y-2 transition
+                  ${
+                    isPast
+                      ? 'bg-zinc-100 dark:bg-zinc-900 opacity-60'
+                      : 'bg-zinc-50 dark:bg-zinc-950'
+                  }
+                `}
               >
                 <div className="lg:absolute lg:top-3 lg:right-3 static mb-2 mb-0">
                   <EventStatusBadge status={status} />
                 </div>
 
-                <div className="font-medium text-md text-zinc-800">
+                <div className="font-medium text-md text-zinc-800 dark:text-zinc-100">
                   {event.timeLabel}
                 </div>
 
-                <div className="text-sm font-semibold text-zinc-700">
+                <div className="text-sm font-semibold text-zinc-700 dark:text-zinc-200">
                   {event.title}
                 </div>
 
-                <div className="flex gap-4 text-sm text-zinc-500">
-                  <div className="text-sm text-zinc-500 flex items-center gap-1">
+                <div className="flex gap-4 text-sm text-zinc-500 dark:text-zinc-400">
+                  <div className="text-sm flex items-center gap-1">
                     <MapPinIcon className={iconClass} />
                     <LocationLink
                       key={event.location.id}
@@ -118,15 +125,15 @@ export default function EventSection({
                       onClick={onClickLocationLink}
                     />
                   </div>
-                  <div className="text-sm text-zinc-500 flex items-center gap-1">
+                  <div className="text-sm flex items-center gap-1">
                     <CurrencyDollarIcon className={iconClass} /> {event.amount}
                   </div>
-                  <div className="text-sm text-zinc-500 flex items-center gap-1">
+                  <div className="text-sm flex items-center gap-1">
                     <ClockIcon className={iconClass} /> {event.duration} 小時
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 text-xs text-zinc-600 pt-2">
+                <div className="flex flex-wrap gap-2 text-xs text-zinc-600 dark:text-zinc-400 pt-2">
                   <span>
                     建立者:{' '}
                     <UserTag user={event.createdBy} className="text-xs" />
@@ -137,7 +144,7 @@ export default function EventSection({
                   </span>
                 </div>
 
-                <div className="flex flex-wrap gap-2 text-xs text-zinc-600 pt-2">
+                <div className="flex flex-wrap gap-2 text-xs text-zinc-600 dark:text-zinc-400 pt-2">
                   <span>
                     參與者:{' '}
                     {event.users.map((u) => (
@@ -147,13 +154,17 @@ export default function EventSection({
                 </div>
 
                 {event.notes && (
-                  <div className="text-xs text-zinc-600 border-t pt-2">
+                  <div className="text-xs text-zinc-600 dark:text-zinc-400 border-t pt-2">
                     備註：{event.notes}
                   </div>
                 )}
 
                 <button
-                  className="mt-4 w-40 text-xs text-red-600 hover:text-red-600 hover:underline transition cursor-pointer flex items-center gap-1
+                  className="
+                    mt-4 w-40 text-xs
+                    text-red-600 dark:text-red-400
+                    hover:underline
+                    transition cursor-pointer flex items-center gap-1
                     disabled:opacity-50 disabled:cursor-not-allowed
                   "
                   disabled={isDeletingThis}

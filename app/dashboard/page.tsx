@@ -70,7 +70,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-100 flex justify-center px-6">
+    <div className="min-h-screen flex justify-center px-6 bg-[var(--background)] text-[var(--foreground)]">
       <div className="w-full max-w-6xl py-8">
         <PageHeader />
 

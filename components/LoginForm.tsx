@@ -4,7 +4,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import PageHeader from './ui/PageHeader';
-import { inputClass } from '@/lib/styles/input';
+import { inputClass } from '@/lib/styles/form';
+import { cardClass } from '@/lib/styles/card';
+import { buttonClass, primary } from '@/lib/styles/button';
 
 export default function LoginForm() {
   const [username, setUsername] = useState('');
@@ -58,7 +60,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-100 flex justify-center items-start pt-30 px-6">
+    <div className="min-h-screen flex justify-center items-start pt-30 px-6">
       <div className="w-full max-w-6xl">
         <PageHeader />
         <form
@@ -66,7 +68,7 @@ export default function LoginForm() {
             e.preventDefault();
             handleLogin();
           }}
-          className="w-80 rounded-md bg-white p-6 shadow space-y-3"
+          className={'w-80 ' + cardClass}
         >
           <input
             type="text"
@@ -88,9 +90,7 @@ export default function LoginForm() {
           <button
             type="submit"
             disabled={isEntering}
-            className="w-full px-4 py-2 rounded-md bg-pink-500 text-white transition cursor-pointer
-              hover:bg-pink-400
-              disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-pink-400"
+            className={`${buttonClass} ${primary}`}
           >
             {isEntering ? '驗證中...' : '進入'}
           </button>
