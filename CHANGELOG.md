@@ -1,3 +1,14 @@
+## 2.5.0 - [2026-06-08]
+
+### Style
+- Updated global background color to a softer tone for improved UI consistency
+
+### Fixed
+- Resolved iOS `datetime-local` input overflow issue by overriding WebKit appearance behavior
+
+### Refactor
+- Adjusted Next.js client/server component boundaries to align with App Router architecture
+
 ## 2.4.0 - [2026-06-08]
 
 ### Added
@@ -14,7 +25,6 @@
 - Replaced exact day-difference matching with date range window logic for more reliable scheduling.
 - Improved reminder accuracy across timezone and execution timing edge cases.
 - Enhanced robustness of reminder system against cron delay and boundary timing issues.
-
 
 ## 2.3.0 - [2026-06-05]
 
