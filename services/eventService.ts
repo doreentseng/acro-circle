@@ -12,8 +12,6 @@ export const getEvents = async (): Promise<EventViewModel[]> => {
   const { data, error } = await supabase
     .from('upcoming_events')
     .select(EVENT_SELECT)
-    .gte('event_end', new Date().toISOString())
-    .order('event_time', { ascending: true })
     .limit(3);
 
   if (error) throw error;
