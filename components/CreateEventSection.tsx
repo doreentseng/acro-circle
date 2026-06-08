@@ -140,6 +140,7 @@ export default function CreateEventSection({
           <input
             type="datetime-local"
             className={inputClass}
+            style={{ WebkitAppearance: 'none' }}
             value={form.eventTime}
             onChange={(e) => setForm({ ...form, eventTime: e.target.value })}
           />
