@@ -1,3 +1,9 @@
+## 2.5.1 - [2026-06-08]
+
+###  Fixes
+- Standardized error handling across the app by introducing `getErrorMessage` utility to safely handle unknown errors
+- Replaced manual event filtering logic with `upcoming_events` database view for consistent and centralized event querying
+
 ## 2.5.0 - [2026-06-08]
 
 ### Style
