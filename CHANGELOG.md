@@ -1,3 +1,21 @@
+## 2.4.0 - [2026-06-08]
+
+### Added
+
+- Added same-day (0-day) reminder notification for events occurring on the current day.
+
+### Fixed
+
+- Fixed incorrect reminder timing where 3-day reminders were triggered one day early due to flawed day difference calculation.
+- Prevented off-by-one errors caused by strict diffDays === N comparison logic.
+
+### Improvements
+
+- Replaced exact day-difference matching with date range window logic for more reliable scheduling.
+- Improved reminder accuracy across timezone and execution timing edge cases.
+- Enhanced robustness of reminder system against cron delay and boundary timing issues.
+
+
 ## 2.3.0 - [2026-06-05]
 
 ### Added
