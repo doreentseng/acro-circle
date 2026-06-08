@@ -21,6 +21,7 @@ import type { LocationViewModel } from '@/lib/types/location';
 import { cardClass } from '@/lib/styles/card';
 import { useToast } from '@/providers/ToastProvider';
 import { Alert } from './ui/Alert';
+import { getErrorMessage } from '@/lib/utils/getErrorMessage';
 
 const NOW = Date.now();
 
@@ -56,14 +57,13 @@ export default function EventSection({
     try {
       await deleteEvent(`${eventId}`);
       showToast('刪除成功', 'delete');
-    } catch (e) {
+    } catch (e: unknown) {
       console.log(e);
-
       setAlerts((prev) => ({
         ...prev,
         [eventId]: {
           type: 'error',
-          message: `刪除失敗，${e.message}`,
+          message: `刪除失敗，${getErrorMessage(e)}`,
         },
       }));
     }
