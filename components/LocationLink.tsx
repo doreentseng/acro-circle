@@ -1,3 +1,5 @@
+'use client';
+
 import { LocationViewModel } from '@/lib/types/location';
 
 export default function LocationLink({

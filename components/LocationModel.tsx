@@ -1,3 +1,5 @@
+'use client';
+
 import { iconClass } from '@/lib/styles/icon';
 import type { LocationViewModel } from '@/lib/types/location';
 import { MapPinIcon, GlobeAltIcon } from '@heroicons/react/24/solid';

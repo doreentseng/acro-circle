@@ -1,3 +1,5 @@
+'use client';
+
 import type { LocationViewModel } from '@/lib/types/location';
 import { MapPinIcon } from '@heroicons/react/24/solid';
 import SectionTitle from '@/components/ui/SectionTitle';

@@ -1,3 +1,5 @@
+'use client';
+
 type Props = {
   toasts: {
     id: number;

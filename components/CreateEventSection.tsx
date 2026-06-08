@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState, useRef } from 'react';
 import type { EventInput } from '@/lib/types/event';
 import type { UserViewModel } from '@/lib/types/user';
