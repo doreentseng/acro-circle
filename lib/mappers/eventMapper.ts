@@ -14,7 +14,12 @@ export function mapEvent(raw: EventRaw): EventViewModel {
     duration: String(raw.duration),
     notes: raw.notes,
 
-    // relational objects (ViewModel upgrade)
+    reminder3dSent: raw.reminder_3d_sent,
+    reminder1dSent: raw.reminder_1d_sent,
+    reminder0dSent: raw.reminder_0d_sent,
+    lineGroupId: raw.line_group_id,
+
+    // relational objects
     createdBy: raw.created_by_user
       ? mapUser(raw.created_by_user)
       : ({} as UserViewModel),
@@ -34,9 +39,5 @@ export function mapEvent(raw: EventRaw): EventViewModel {
     users: raw.event_users?.map((eu) => mapUser(eu.user)) ?? [],
 
     timeLabel: formatEventTimeToTimeLabel(raw.event_time, Number(raw.duration)),
-
-    reminder3dSent: raw.reminder_3d_sent,
-    reminder1dSent: raw.reminder_1d_sent,
-    lineGroupId: raw.line_group_id,
   };
 }

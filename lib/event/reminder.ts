@@ -4,9 +4,14 @@ import { EVENT_SELECT } from '@/lib/constants/eventSelect';
 import { EventViewModel } from '@/lib/types/event';
 import { mapEvent } from '@/lib/mappers/eventMapper';
 
-export function buildReminderMessage(data: EventViewModel, type: '3d' | '1d') {
+export function buildReminderMessage(
+  data: EventViewModel,
+  type: '3d' | '1d' | '0d',
+) {
+  if (type === '3d') return `@All 3 天後要練雙人瑜伽喔！詳細內容可於 https://acro-circle.vercel.app/ 瀏覽`;
+
   const prefix =
-    type === '3d' ? '📅【活動提醒】3天後有活動' : '⚠️【活動提醒】明天有活動';
+    type === '1d' ? '📅【活動提醒】明天有活動' : '⚠️【活動提醒】今天有活動';
 
   const usersNames =
     data.users?.length > 0 ? data.users.map((u) => u.name).join('、') : '無';
@@ -25,15 +30,15 @@ ${prefix}
 📝 備註：${data.notes?.trim() || '無'}
 
 🗺️ 地圖：${data.location.mapUrl || '無'}
-`.trim();
+`;
 }
 
 // for test
 // export async function runReminderJob() {
 //   try {
-//     console.log('有跑runReminderJob');
-//     await pushToGroup(process.env.NEXT_PUBLIC_LINE_MY_GROUP_ID, '手動測試傳送通知');
-//     console.log('成功傳送');
+//     console.log('go runReminderJob');
+//     await pushToGroup(process.env.NEXT_PUBLIC_LINE_MY_GROUP_ID, 'send notification message in line group by me');
+//     console.log('done');
 //     return {
 //       success: true,
 //     };
@@ -44,35 +49,32 @@ ${prefix}
 // }
 
 const isWithinDayRange = (eventTime: string, daysBefore: number) => {
-  const now = new Date();
   const event = new Date(eventTime);
 
-  const diffMs = event.getTime() - now.getTime();
-  const diffDays = diffMs / (1000 * 60 * 60 * 24);
+  const start = new Date();
+  start.setDate(start.getDate() + daysBefore);
+  start.setHours(0, 0, 0, 0);
 
-  return diffDays <= daysBefore && diffDays > daysBefore - 1;
+  const end = new Date();
+  end.setDate(end.getDate() + daysBefore + 1);
+  end.setHours(0, 0, 0, 0);
+
+  return event >= start && event < end;
 };
 
 export async function runReminderJob() {
   const now = new Date();
 
+  const past = new Date();
+  past.setHours(now.getHours() - 12);
+
   const future = new Date();
-  future.setDate(now.getDate() + 3);
-
-  // const buildReminderWindow = (daysAhead: number) => {
-  //   const start = new Date(now);
-  //   start.setDate(now.getDate() + daysAhead);
-
-  //   const end = new Date(start);
-  //   end.setMinutes(start.getMinutes() + 10);
-
-  //   return { start, end };
-  // };
+  future.setDate(now.getDate() + 4);
 
   const { data: eventsRaw } = await supabase
     .from('events')
     .select(EVENT_SELECT)
-    .gte('event_time', now.toISOString())
+    .gte('event_time', past.toISOString())
     .lte('event_time', future.toISOString());
 
   const events = eventsRaw?.map((ev) => mapEvent(ev));
@@ -97,85 +99,20 @@ export async function runReminderJob() {
         .update({ reminder_1d_sent: true })
         .eq('id', event.id);
     }
+
+    // 0 day before
+    if (!event.reminder0dSent && isWithinDayRange(event.eventTime, 0)) {
+      await pushToGroup(event.lineGroupId, buildReminderMessage(event, '0d'));
+
+      await supabase
+        .from('events')
+        .update({ reminder_0d_sent: true })
+        .eq('id', event.id);
+    }
   }
 
   return {
     success: true,
     checked: events?.length ?? 0,
   };
-
-  // const { start: start3, end: end3 } = buildReminderWindow(3);
-
-  // const { data: events3, error: error3 } = await supabase
-  //   .from('events')
-  //   .select(EVENT_SELECT)
-  //   .eq('reminder_3d_sent', false)
-  //   .gte('event_time', start3.toISOString())
-  //   .lte('event_time', end3.toISOString());
-
-  // console.log(events3);
-  // if (error3) {
-  //   console.error('3-day reminder query error:', error3);
-  // }
-
-  // const { start: start1, end: end1 } = buildReminderWindow(1);
-
-  // const { data: events1, error: error1 } = await supabase
-  //   .from('events')
-  //   .select(EVENT_SELECT)
-  //   .eq('reminder_1d_sent', false)
-  //   .gte('event_time', start1.toISOString())
-  //   .lte('event_time', end1.toISOString());
-
-  // console.log(events1);
-  // if (error1) {
-  //   console.error('1-day reminder query error:', error1);
-  // }
-
-  // for (const event of events3 ?? []) {
-  //   console.log('events3:');
-  //   console.log(event);
-  //   const eventData = mapEvent(event);
-  //   try {
-  //     await pushToGroup(
-  //       eventData.lineGroupId,
-  //       buildReminderMessage(eventData, '3d'),
-  //     );
-
-  //     await supabase
-  //       .from('events')
-  //       .update({ reminder_3d_sent: true })
-  //       .eq('id', eventData.id);
-  //   } catch (err) {
-  //     console.error('Failed 3-day reminder:', eventData.id, err);
-  //   }
-  // }
-
-  // for (const event of events1 ?? []) {
-  //   console.log('events1:');
-  //   console.log(event);
-  //   const eventData = mapEvent(event);
-  //   try {
-  //     await pushToGroup(
-  //       eventData.lineGroupId,
-  //       buildReminderMessage(eventData, '1d'),
-  //     );
-
-  //     await supabase
-  //       .from('events')
-  //       .update({ reminder_1d_sent: true })
-  //       .eq('id', eventData.id);
-  //   } catch (err) {
-  //     console.error('Failed 1-day reminder:', eventData.id, err);
-  //   }
-  // }
-
-  // console.log('events3:', events3?.length);
-  // console.log('events1:', events1?.length);
-
-  // return {
-  //   success: true,
-  //   sent3Day: events3?.length ?? 0,
-  //   sent1Day: events1?.length ?? 0,
-  // };
 }
