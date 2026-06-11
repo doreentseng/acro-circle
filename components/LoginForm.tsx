@@ -7,6 +7,7 @@ import PageHeader from './ui/PageHeader';
 import { inputClass } from '@/lib/styles/form';
 import { cardClass } from '@/lib/styles/card';
 import { buttonClass, primary } from '@/lib/styles/button';
+import { PATHNAME } from '@/lib/constants/pathname';
 
 export default function LoginForm() {
   const [username, setUsername] = useState('');
@@ -56,7 +57,7 @@ export default function LoginForm() {
       },
     });
     setIsEntering(false);
-    router.push('/dashboard');
+    router.push(PATHNAME.DASHBOARD);
   };
 
   return (

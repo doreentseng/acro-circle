@@ -17,6 +17,7 @@ import CreateEventSection from '@/components/CreateEventSection';
 import LocationModal from '@/components/LocationModel';
 import { useToast } from '@/providers/ToastProvider';
 import { ToastContainer } from '@/components/ui/ToastContainer';
+import {PATHNAME} from '@/lib/constants/pathname';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -36,14 +37,14 @@ export default function Dashboard() {
 
       if (error || !user) {
         console.error('Error fetching current user:', error);
-        router.push('/login');
+        router.push(PATHNAME.LOGIN);
         return;
       }
 
       const userId = user.user_metadata.userId;
       if (!userId) {
         console.error('Current user has no userId in metadata');
-        router.push('/login');
+        router.push(PATHNAME.LOGIN);
         return;
       }
       setCurrentUserId(userId);
