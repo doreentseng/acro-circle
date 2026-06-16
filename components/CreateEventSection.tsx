@@ -20,6 +20,7 @@ import { cardClass } from '@/lib/styles/card';
 import { buttonClass, primary } from '@/lib/styles/button';
 import { useToast } from '@/providers/ToastProvider';
 import { Alert, EMPTY_ALERT_DATA } from './ui/Alert';
+import GroupNotificationNotice from '@/components/GroupNotificationNotice';
 
 const EMPTY_FORM = {
   title: 'Acroyoga 練習',
@@ -267,6 +268,8 @@ export default function CreateEventSection({
         <button disabled={isCreating} className={`${buttonClass} ${primary}`}>
           {isCreating ? '建立中...' : '建立預約'}
         </button>
+
+        <GroupNotificationNotice />
       </form>
     </>
   );
