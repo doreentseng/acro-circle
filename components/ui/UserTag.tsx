@@ -8,8 +8,12 @@ const tagColors = [
   'bg-blue-100 text-blue-900 dark:bg-blue-900/30 dark:text-blue-200',
 ];
 
+const defaultTagColor =
+  'bg-olive-100 text-olive-900 dark:bg-olive-900/30 dark:text-olive-200';
+
 export function getTagColor(key: string): string {
-  return tagColors[Number(key) - 1];
+  if (Number(key)) return tagColors[Number(key) - 1];
+  else return defaultTagColor;
 }
 
 export default function UserTag({
