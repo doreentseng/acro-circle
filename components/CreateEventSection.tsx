@@ -19,7 +19,7 @@ import {
 import { cardClass } from '@/lib/styles/card';
 import { buttonClass, primary } from '@/lib/styles/button';
 import { useToast } from '@/providers/ToastProvider';
-import { Alert, EMPTY_ALERT_DATA } from './ui/Alert';
+import { Alert } from './ui/Alert';
 import GroupNotificationNotice from '@/components/GroupNotificationNotice';
 
 const EMPTY_FORM = {
@@ -50,10 +50,10 @@ export default function CreateEventSection({
   const { showToast } = useToast();
 
   const [showAlert, setShowAlert] = useState(false);
-  const [alertData, setAlertData] = useState(EMPTY_ALERT_DATA);
+  const [alertData, setAlertData] = useState(null);
   const resetAlert = () => {
     setShowAlert(false);
-    setAlertData(EMPTY_ALERT_DATA);
+    setAlertData(null);
   };
 
   const setDefaultForm = () => {
@@ -262,8 +262,8 @@ export default function CreateEventSection({
             onChange={(e) => setForm({ ...form, notes: e.target.value })}
           />
         </FormField>
-        {showAlert && (
-          <Alert type={alertData.type} message={alertData.message} />
+        {showAlert && alertData && (
+          <Alert type={alertData.type}>{alertData.message}</Alert>
         )}
         <button disabled={isCreating} className={`${buttonClass} ${primary}`}>
           {isCreating ? '建立中...' : '建立預約'}

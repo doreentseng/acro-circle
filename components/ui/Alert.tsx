@@ -11,22 +11,17 @@ type AlertType = 'error' | 'success' | 'info';
 export interface AlertProps {
   type?: AlertType;
   title?: string;
-  message: string;
+  children: React.ReactNode;
   onClose?: () => void;
   className?: string;
 }
 
-export const EMPTY_ALERT_DATA: AlertProps = {
-  title: '',
-  message: '',
-};
-
 export function Alert({
   type = 'info',
   title,
-  message,
+  children,
   onClose,
-  className,
+  className = '',
 }: AlertProps) {
   const base =
     'w-full rounded-lg border px-4 py-3 flex items-start gap-3 transition';
@@ -40,7 +35,7 @@ export function Alert({
   };
 
   return (
-    <div className={`${className} ${base} ${styles[type]}`}>
+    <div className={`${base} ${styles[type]} ${className}`}>
       {/* Icon */}
       <div className="mt-0.5">
         {type === 'error' && <XCircleIcon className="w-5 h-5" />}
@@ -50,7 +45,7 @@ export function Alert({
 
       <div className="flex-1">
         {title && <div className="font-semibold text-sm mb-0.5">{title}</div>}
-        <div className="text-sm leading-relaxed">{message}</div>
+        <div className="text-sm leading-relaxed">{children}</div>
       </div>
 
       {onClose && (

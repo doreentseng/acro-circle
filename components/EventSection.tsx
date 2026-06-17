@@ -192,11 +192,9 @@ export default function EventSection({
                 )}
 
                 {alerts[event.id] && (
-                  <Alert
-                    className="mt-5"
-                    type={alerts[event.id].type}
-                    message={alerts[event.id].message}
-                  />
+                  <Alert className="mt-5" type={alerts[event.id].type}>
+                    {alerts[event.id].message}
+                  </Alert>
                 )}
                 <button
                   className="
