@@ -6,7 +6,7 @@ import { supabase } from '@/lib/supabase';
 import PageHeader from './ui/PageHeader';
 import { inputClass } from '@/lib/styles/form';
 import { cardClass } from '@/lib/styles/card';
-import { buttonClass, primary } from '@/lib/styles/button';
+import { buttonClass, primary, linkClass } from '@/lib/styles/button';
 import { PATHNAME } from '@/lib/constants/pathname';
 
 export default function LoginForm() {
@@ -62,7 +62,7 @@ export default function LoginForm() {
 
   return (
     <div className="min-h-screen flex justify-center items-start pt-30 px-6">
-      <div className="w-full max-w-6xl">
+      <div className="w-full max-w-6xl text-center">
         <PageHeader />
         <form
           onSubmit={(e) => {
@@ -96,6 +96,12 @@ export default function LoginForm() {
             {isEntering ? '驗證中...' : '進入'}
           </button>
         </form>
+        <button
+          className={linkClass + ` mt-2 text-sm text-zinc-400 mx-auto`}
+          onClick={handleGuestLogin}
+        >
+          訪客模式（查看示範資料）
+        </button>
       </div>
     </div>
   );

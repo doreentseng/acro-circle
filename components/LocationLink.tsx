@@ -1,5 +1,6 @@
 'use client';
 
+import { linkClass } from '@/lib/styles/button';
 import { LocationViewModel } from '@/lib/types/location';
 
 export default function LocationLink({
@@ -11,17 +12,16 @@ export default function LocationLink({
 }) {
   return (
     <>
-      <a
-        href="#"
+      <button
         key={location.id}
-        className="flex justify-between underline hover:underline hover:text-pink-600 transition group"
+        className={`flex justify-between ` + linkClass}
         onClick={(e) => {
           e.preventDefault();
           onClick(location);
         }}
       >
         {location.name}
-      </a>
+      </button>
     </>
   );
 }
