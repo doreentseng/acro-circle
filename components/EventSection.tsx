@@ -22,6 +22,7 @@ import { cardClass } from '@/lib/styles/card';
 import { useToast } from '@/providers/ToastProvider';
 import { Alert } from './ui/Alert';
 import { getErrorMessage } from '@/lib/utils/getErrorMessage';
+import { linkClass } from '@/lib/styles/button';
 
 const NOW = Date.now();
 
@@ -46,6 +47,9 @@ export default function EventSection({
   } = useDeleteEvent();
 
   const [alerts, setAlerts] = useState<EventAlerts>({});
+  const [confirmingDeleteId, setConfirmingDeleteId] = useState<string | null>(
+    null
+  );
 
   const handleDeleteEvent = async (eventId: string) => {
     setAlerts((prev) => {
@@ -196,22 +200,46 @@ export default function EventSection({
                     {alerts[event.id].message}
                   </Alert>
                 )}
-                <button
-                  className="
-                    mt-4 w-40 text-xs
-                    text-red-600 dark:text-red-400
-                    hover:underline
-                    transition cursor-pointer flex items-center gap-1
-                    disabled:opacity-50 disabled:cursor-not-allowed
-                  "
-                  disabled={isDeleting && event.id === deletingEventId}
-                  onClick={() => handleDeleteEvent(event.id)}
-                >
-                  <TrashIcon className="w-4 h-4" />
-                  {isDeleting && event.id === deletingEventId
-                    ? '刪除中'
-                    : '刪除預約'}
-                </button>
+                {confirmingDeleteId === event.id ? (
+                  <div className="mt-4 flex items-center gap-2 text-xs">
+                    <span className="text-red-600 dark:text-red-400">
+                      是否確認刪除？
+                    </span>
+                    <button
+                      className={linkClass}
+                      onClick={() => setConfirmingDeleteId(null)}
+                    >
+                      取消
+                    </button>
+                    or
+                    <button
+                      className={linkClass}
+                      onClick={() => {
+                        handleDeleteEvent(event.id);
+                        setConfirmingDeleteId(null);
+                      }}
+                    >
+                      確認刪除
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    className="
+                      mt-4 w-40 text-xs
+                      text-red-600 dark:text-red-400
+                      hover:underline
+                      transition cursor-pointer flex items-center gap-1
+                      disabled:opacity-50 disabled:cursor-not-allowed
+                    "
+                    disabled={isDeleting && event.id === deletingEventId}
+                    onClick={() => setConfirmingDeleteId(event.id)}
+                  >
+                    <TrashIcon className="w-4 h-4" />
+                    {isDeleting && event.id === deletingEventId
+                      ? '刪除中'
+                      : '刪除預約'}
+                  </button>
+                )}
               </div>
             );
           })}
