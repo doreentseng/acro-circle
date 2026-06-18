@@ -18,6 +18,7 @@ import { useToast } from '@/providers/ToastProvider';
 import { ToastContainer } from '@/components/ui/ToastContainer';
 import { useAuth } from '@/providers/AuthProvider';
 import UserProfile from '@/components/UserProfile';
+import GuestModeNotice from '@/components/GuestModeNotice';
 import { mockUsers, mockLocations } from '@/lib/data/mockData';
 
 export default function Dashboard() {
@@ -67,6 +68,7 @@ export default function Dashboard() {
       <div className="w-full max-w-6xl py-8">
         <PageHeader />
         <UserProfile />
+        <GuestModeNotice />
 
         <LocationModal
           location={selectedLocation}
