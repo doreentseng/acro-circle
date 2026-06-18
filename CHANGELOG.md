@@ -1,18 +1,31 @@
+## 2.6.0 - [2026-06-18]
+
+### Added
+
+- Guest mode with mock data
+- Group Notification Notice
+- User Profile
+- Logout function
+
 ## 2.5.1 - [2026-06-08]
 
-###  Fixes
+### Fixes
+
 - Standardized error handling across the app by introducing `getErrorMessage` utility to safely handle unknown errors
 - Replaced manual event filtering logic with `upcoming_events` database view for consistent and centralized event querying
 
 ## 2.5.0 - [2026-06-08]
 
 ### Style
+
 - Updated global background color to a softer tone for improved UI consistency
 
 ### Fixed
+
 - Resolved iOS `datetime-local` input overflow issue by overriding WebKit appearance behavior
 
 ### Refactor
+
 - Adjusted Next.js client/server component boundaries to align with App Router architecture
 
 ## 2.4.0 - [2026-06-08]
