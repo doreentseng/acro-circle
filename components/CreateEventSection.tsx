@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import type { EventInput } from '@/lib/types/event';
 import type { UserViewModel } from '@/lib/types/user';
 import type { LocationViewModel } from '@/lib/types/location';
+import type { AlertProps } from '@/components/ui/Alert';
 import { BoltIcon, ChevronDownIcon } from '@heroicons/react/24/solid';
 import SectionTitle from '@/components/ui/SectionTitle';
 import FormField from '@/components/ui/FormField';
@@ -50,7 +51,11 @@ export default function CreateEventSection({
   const { showToast } = useToast();
 
   const [showAlert, setShowAlert] = useState(false);
-  const [alertData, setAlertData] = useState(null);
+  const [alertData, setAlertData] = useState<{
+    type: AlertProps['type'];
+    title: AlertProps['title'];
+    message: AlertProps['children'];
+  } | null>(null);
   const resetAlert = () => {
     setShowAlert(false);
     setAlertData(null);
