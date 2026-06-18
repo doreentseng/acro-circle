@@ -22,6 +22,7 @@ import { buttonClass, primary } from '@/lib/styles/button';
 import { useToast } from '@/providers/ToastProvider';
 import { Alert } from './ui/Alert';
 import GroupNotificationNotice from '@/components/GroupNotificationNotice';
+import { useAuth } from '@/providers/AuthProvider';
 
 const EMPTY_FORM = {
   title: 'Acroyoga 練習',
@@ -32,7 +33,7 @@ const EMPTY_FORM = {
   userIds: [],
   amount: '1000',
   duration: '2',
-  notes: '開門密碼1598',
+  notes: '',
 };
 
 export default function CreateEventSection({
@@ -49,6 +50,7 @@ export default function CreateEventSection({
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const hasInitialized = useRef(false);
   const { showToast } = useToast();
+  const { isGuest } = useAuth();
 
   const [showAlert, setShowAlert] = useState(false);
   const [alertData, setAlertData] = useState<{
@@ -67,7 +69,9 @@ export default function CreateEventSection({
       userIds: ['1', '2', '3', '4'],
       bookedBy: '3',
       locationId: locations[0].id,
+      notes: isGuest ? '' : '開門密碼1598'
     });
+    
   };
 
   useEffect(() => {
