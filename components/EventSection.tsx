@@ -58,7 +58,7 @@ export default function EventSection({
       await deleteEvent(`${eventId}`);
       showToast('刪除成功', 'delete');
     } catch (e: unknown) {
-      console.log(e);
+      console.warn(e);
       setAlerts((prev) => ({
         ...prev,
         [eventId]: {

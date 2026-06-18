@@ -100,13 +100,13 @@ export default function CreateEventSection({
     resetAlert();
 
     const newErrors = validateForm();
-    // console.log('Form validation errors:', newErrors);
+    // console.warn('Form validation errors:', newErrors);
     setFormErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) return;
 
-    // console.log('Form submitted:', form);
-    // console.log('Current user ID:', currentUserId);
+    // console.warn('Form submitted:', form);
+    // console.warn('Current user ID:', currentUserId);
 
     try {
       createEvent({

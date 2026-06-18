@@ -8,7 +8,8 @@ export function buildReminderMessage(
   data: EventViewModel,
   type: '3d' | '1d' | '0d',
 ) {
-  if (type === '3d') return `@All 3 天後要練雙人瑜伽喔！詳細內容可於 https://acro-circle.vercel.app/ 瀏覽`;
+  if (type === '3d')
+    return `@All 3 天後要練雙人瑜伽喔！詳細內容可於 https://acro-circle.vercel.app/ 瀏覽`;
 
   const prefix =
     type === '1d' ? '📅【活動提醒】明天有活動' : '⚠️【活動提醒】今天有活動';
@@ -36,14 +37,14 @@ ${prefix}
 // for test
 // export async function runReminderJob() {
 //   try {
-//     console.log('go runReminderJob');
+//     console.warn('go runReminderJob');
 //     await pushToGroup(process.env.NEXT_PUBLIC_LINE_MY_GROUP_ID, 'send notification message in line group by me');
-//     console.log('done');
+//     console.warn('done');
 //     return {
 //       success: true,
 //     };
 //   } catch (e) {
-//     console.log(e);
+//     console.warn(e);
 //     throw e;
 //   }
 // }

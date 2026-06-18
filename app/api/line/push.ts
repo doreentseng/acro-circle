@@ -12,7 +12,7 @@ export async function pushToGroup(groupId: string, text: string) {
       }),
     });
   } catch (e) {
-    console.log(e);
+    console.error(e);
     throw e;
   }
 }
