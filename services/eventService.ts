@@ -7,8 +7,20 @@ import { supabase } from '@/lib/supabase';
 import { mapEvent } from '@/lib/mappers/eventMapper';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { EVENT_SELECT } from '@/lib/constants/eventSelect';
+import { mockEvents } from '@/lib/data/mockData';
+
+const isGuestMode = () => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('guestMode') === 'true';
+  }
+  return false;
+};
 
 export const getEvents = async (): Promise<EventViewModel[]> => {
+  if (isGuestMode()) {
+    return Promise.resolve(mockEvents);
+  }
+
   const { data, error } = await supabase
     .from('upcoming_events')
     .select(EVENT_SELECT)
@@ -16,10 +28,10 @@ export const getEvents = async (): Promise<EventViewModel[]> => {
 
   if (error) throw error;
 
-  console.log('Fetched raw events:', data);
+  // console.log('Fetched raw events:', data);
   const mapped = (data ?? []).map(mapEvent);
 
-  console.log('Mapped events:', mapped);
+  // console.log('Mapped events:', mapped);
 
   return mapped;
 };
@@ -42,6 +54,14 @@ export const transformInputToPayload = (
 
 export const createEvent = async (formData: EventInput) => {
   try {
+    if (isGuestMode()) {
+      // console.log('Guest mode: Event not created (mock only)');
+      return {
+        success: true,
+        data: null,
+      };
+    }
+
     const payload: CreateEventPayload = transformInputToPayload(formData);
 
     const { data, error } = await supabase.rpc(
@@ -69,6 +89,11 @@ export const createEvent = async (formData: EventInput) => {
 };
 
 export const deleteEvent = async (eventId: string) => {
+  if (isGuestMode()) {
+    console.warn('Guest mode: Event not deleted (mock only)');
+    return true;
+  }
+
   const { data, error } = await supabase
     .from('events')
     .delete()
@@ -103,6 +128,11 @@ export const useDeleteEvent = () => {
 
   return useMutation({
     mutationFn: async (id: string) => {
+      if (isGuestMode()) {
+        // console.log('Guest mode: Event not deleted (mock only)');
+        return null;
+      }
+
       const { data, error } = await supabase
         .from('events')
         .delete()

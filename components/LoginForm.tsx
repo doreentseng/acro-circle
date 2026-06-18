@@ -3,18 +3,19 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-import PageHeader from './ui/PageHeader';
+import PageHeader from '@/components/ui/PageHeader';
 import { inputClass } from '@/lib/styles/form';
 import { cardClass } from '@/lib/styles/card';
 import { buttonClass, primary, linkClass } from '@/lib/styles/button';
 import { PATHNAME } from '@/lib/constants/pathname';
+import { useAuth } from '@/providers/AuthProvider';
 
 export default function LoginForm() {
   const [username, setUsername] = useState('');
   const [sesame, setSesame] = useState('');
   const [error, setError] = useState('');
   const [isEntering, setIsEntering] = useState(false);
-
+  const { loginAsGuest, setCurrentUser } = useAuth();
   const router = useRouter();
 
   const handleLogin = async () => {
@@ -24,18 +25,18 @@ export default function LoginForm() {
     // get email by username
     const { data, error } = await supabase
       .from('users')
-      .select('id, email')
+      .select('id, email, name, username')
       .eq('username', username)
       .single();
 
-    console.log('Login query result:', { data, error });
+    // console.log('Login query result:', { data, error });
 
     if (error || !data) {
       setError('查無此使用者');
       setIsEntering(false);
       return;
     }
-    console.log('Found data:', data);
+    // console.log('Found data:', data);
 
     // login with email and password
     const { data: authData, error: authError } =
@@ -43,7 +44,7 @@ export default function LoginForm() {
         email: data.email,
         password: sesame,
       });
-    console.log('authData1:', authData);
+    // console.log('authData:', authData);
 
     if (authError) {
       setError('密碼錯誤');
@@ -56,7 +57,19 @@ export default function LoginForm() {
         userId: String(data.id),
       },
     });
+
+    setCurrentUser({
+      id: String(data.id),
+      name: data.name,
+      username: data.username,
+    });
+
     setIsEntering(false);
+    router.push(PATHNAME.DASHBOARD);
+  };
+
+  const handleGuestLogin = () => {
+    loginAsGuest();
     router.push(PATHNAME.DASHBOARD);
   };
 

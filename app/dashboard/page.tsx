@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
 import type { UserViewModel } from '@/lib/types/user';
 import type { LocationViewModel } from '@/lib/types/location';
 import { getUsers } from '@/services/userService';
@@ -17,53 +16,42 @@ import CreateEventSection from '@/components/CreateEventSection';
 import LocationModal from '@/components/LocationModel';
 import { useToast } from '@/providers/ToastProvider';
 import { ToastContainer } from '@/components/ui/ToastContainer';
-import {PATHNAME} from '@/lib/constants/pathname';
+import { useAuth } from '@/providers/AuthProvider';
+import UserProfile from '@/components/UserProfile';
+import { mockUsers, mockLocations } from '@/lib/data/mockData';
 
 export default function Dashboard() {
   const router = useRouter();
-  const [currentUserId, setCurrentUserId] = useState<UserViewModel['id']>('');
   const [users, setUsers] = useState<UserViewModel[]>([]);
   const [locations, setLocations] = useState<LocationViewModel[]>([]);
   const { toasts, removeToast } = useToast();
+  const { currentUser, isGuest, isLoading: authLoading } = useAuth();
 
   useEffect(() => {
+    // Wait for AuthProvider initialization to complete
+    if (authLoading) return;
+
     requireAuth(router);
 
-    const loadCurrentUser = async () => {
-      const {
-        data: { user },
-        error,
-      } = await supabase.auth.getUser();
-
-      if (error || !user) {
-        console.error('Error fetching current user:', error);
-        router.push(PATHNAME.LOGIN);
+    // load users and locations data
+    const loadData = async () => {
+      if (isGuest) {
+        setUsers(mockUsers);
+        setLocations(mockLocations);
         return;
       }
 
-      const userId = user.user_metadata.userId;
-      if (!userId) {
-        console.error('Current user has no userId in metadata');
-        router.push(PATHNAME.LOGIN);
-        return;
-      }
-      setCurrentUserId(userId);
+      const [locationsData, usersData] = await Promise.all([
+        getLocations(),
+        getUsers(),
+      ]);
+
+      setLocations(locationsData);
+      setUsers(usersData);
     };
 
-    const loadLocations = async () => {
-      const locations = await getLocations();
-      setLocations(locations);
-    };
-
-    const loadUsers = async () => {
-      const users = await getUsers();
-      setUsers(users);
-    };
-
-    loadCurrentUser();
-    loadLocations();
-    loadUsers();
-  }, [router]);
+    loadData();
+  }, [router, isGuest, authLoading]);
 
   const [selectedLocation, setSelectedLocation] =
     useState<LocationViewModel | null>(null);
@@ -72,10 +60,13 @@ export default function Dashboard() {
     setSelectedLocation(v);
   };
 
+  if (!currentUser) return null;
+
   return (
     <div className="min-h-screen flex justify-center px-6 bg-[var(--background)] text-[var(--foreground)]">
       <div className="w-full max-w-6xl py-8">
         <PageHeader />
+        <UserProfile />
 
         <LocationModal
           location={selectedLocation}
@@ -90,7 +81,7 @@ export default function Dashboard() {
           </div>
           <div className="col-span-3">
             <CreateEventSection
-              currentUserId={currentUserId}
+              currentUserId={currentUser?.id || ''}
               users={users}
               locations={locations}
             />
@@ -107,7 +98,7 @@ export default function Dashboard() {
         {/** mobile UI */}
         <div className="flex flex-col gap-4 md:hidden">
           <CreateEventSection
-            currentUserId={currentUserId}
+            currentUserId={currentUser?.id || ''}
             users={users}
             locations={locations}
           />
