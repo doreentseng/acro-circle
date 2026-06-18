@@ -31,7 +31,7 @@ const EMPTY_FORM = {
   userIds: [],
   amount: '1000',
   duration: '2',
-  notes: '',
+  notes: '開門密碼1598',
 };
 
 export default function CreateEventSection({
