@@ -1,3 +1,9 @@
+## 2.6.1 - [2026-06-18]
+
+### Fixed
+
+- Removed default notes under guest mode
+
 ## 2.6.0 - [2026-06-18]
 
 ### Added
