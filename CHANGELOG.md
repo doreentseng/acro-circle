@@ -1,3 +1,11 @@
+## 2.6.3 - [2026-06-29]
+
+## Changelog
+
+### Improvements
+- Adde spacing between emoji, title, and message content in activity reminder notifications
+- Updated mock user names and usernames in guest mode
+
 ## 2.6.2 - [2026-06-18]
 
 ### Added
