@@ -3,10 +3,10 @@ import type { LocationViewModel } from '@/lib/types/location';
 import type { EventViewModel } from '@/lib/types/event';
 
 export const mockUsers: UserViewModel[] = [
-  { id: '1', name: '黃金獵犬', username: 'goldenretriever' },
-  { id: '2', name: '貴賓狗', username: 'poodle' },
-  { id: '3', name: '博美', username: 'pomeranian' },
-  { id: '4', name: '布丁狗', username: 'pompompurin' },
+  { id: '1', name: '曾豆豆', username: 'beans' },
+  { id: '2', name: '妞妞', username: 'niuniu' },
+  { id: '3', name: 'QB', username: 'qb' },
+  { id: '4', name: '布丁', username: 'pudding' },
   { id: 'guest', name: '訪客', username: 'guest' },
 ];
 
