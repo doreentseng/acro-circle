@@ -12,7 +12,7 @@ export function buildReminderMessage(
     return `@All 3 天後要練雙人瑜伽喔！詳細內容可於 https://acro-circle.vercel.app/ 瀏覽`;
 
   const prefix =
-    type === '1d' ? '📅【活動提醒】明天有活動' : '⚠️【活動提醒】今天有活動';
+    type === '1d' ? '📅 【活動提醒】 明天有活動' : '⚠️ 【活動提醒】 今天有活動';
 
   const usersNames =
     data.users?.length > 0 ? data.users.map((u) => u.name).join('、') : '無';
