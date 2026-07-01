@@ -1,3 +1,9 @@
+### 2.6.5 - [2026-07-01]
+
+### Improvements
+
+- Updated mock event dates
+
 ### 2.6.4 - [2026-07-01]
 
 ### Fixed
