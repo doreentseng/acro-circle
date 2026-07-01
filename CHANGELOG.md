@@ -1,6 +1,11 @@
-## 2.6.3 - [2026-06-29]
+### 2.6.4 - [2026-07-01]
 
-## Changelog
+### Fixed
+
+- Removed sensitive door access code from event notes in mock data to prevent accidental exposure of credentials
+- Corrected mock event date generation and updated event timestamps for consistency across seeded data
+
+## 2.6.3 - [2026-06-29]
 
 ### Improvements
 - Adde spacing between emoji, title, and message content in activity reminder notifications
