@@ -69,7 +69,6 @@ export default function CreateEventSection({
       userIds: ['1', '2', '3', '4'],
       bookedBy: '3',
       locationId: locations[0].id,
-      notes: isGuest ? '' : '開門密碼1598'
     });
     
   };
