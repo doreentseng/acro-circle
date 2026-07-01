@@ -1,6 +1,7 @@
 import type { UserViewModel } from '@/lib/types/user';
 import type { LocationViewModel } from '@/lib/types/location';
 import type { EventViewModel } from '@/lib/types/event';
+import { formatEventTimeToTimeLabel } from '@/lib/utils/formatTime';
 
 export const mockUsers: UserViewModel[] = [
   { id: '1', name: '曾豆豆', username: 'beans' },
@@ -26,11 +27,18 @@ export const mockLocations: LocationViewModel[] = [
 
 export const guestUser: UserViewModel = mockUsers[4];
 
+const createEventTime = (daysOffset: number, hour: number, minute = 0) => {
+  const d = new Date();
+  d.setDate(d.getDate() + daysOffset);
+  d.setHours(hour, minute, 0, 0);
+  return d.toISOString();
+};
+
 export const mockEvents: EventViewModel[] = [
   {
     id: '1',
     title: '週末練習',
-    eventTime: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(), // 2天後
+    eventTime: createEventTime(2, 19, 0),
     amount: '300',
     duration: '2',
     notes: '記得帶水和毛巾',
@@ -38,7 +46,10 @@ export const mockEvents: EventViewModel[] = [
     bookedBy: mockUsers[0],
     location: mockLocations[0],
     users: [mockUsers[0], mockUsers[1], mockUsers[2]],
-    timeLabel: '2026/06/17（星期三）19:00-21:00',
+    timeLabel: formatEventTimeToTimeLabel(
+      createEventTime(2, 19, 0),
+      2,
+    ),
     reminder3dSent: false,
     reminder1dSent: false,
     reminder0dSent: false,
@@ -47,7 +58,7 @@ export const mockEvents: EventViewModel[] = [
   {
     id: '2',
     title: '進階訓練',
-    eventTime: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    eventTime: createEventTime(-6, 19, 0),
     amount: '400',
     duration: '3',
     notes: '高難度動作練習',
@@ -55,7 +66,10 @@ export const mockEvents: EventViewModel[] = [
     bookedBy: mockUsers[1],
     location: mockLocations[1],
     users: [mockUsers[1], mockUsers[3], mockUsers[4]],
-    timeLabel: '2026/06/20（星期六）14:00-17:00',
+    timeLabel: formatEventTimeToTimeLabel(
+      createEventTime(-6, 19, 0),
+      2,
+    ),
     reminder3dSent: false,
     reminder1dSent: false,
     reminder0dSent: false,
@@ -64,7 +78,7 @@ export const mockEvents: EventViewModel[] = [
   {
     id: '3',
     title: '戶外練習',
-    eventTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    eventTime: createEventTime(-10, 18, 0),
     amount: '0',
     duration: '2',
     notes: '在公園練習，免費',
@@ -72,7 +86,10 @@ export const mockEvents: EventViewModel[] = [
     bookedBy: mockUsers[2],
     location: mockLocations[1],
     users: [mockUsers[0], mockUsers[2], mockUsers[3], mockUsers[4]],
-    timeLabel: '2026/06/22（星期一）10:00-12:00',
+    timeLabel: formatEventTimeToTimeLabel(
+      createEventTime(-10, 18, 0),
+      2,
+    ),
     reminder3dSent: false,
     reminder1dSent: false,
     reminder0dSent: false,
