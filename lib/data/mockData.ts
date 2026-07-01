@@ -38,7 +38,7 @@ export const mockEvents: EventViewModel[] = [
   {
     id: '1',
     title: '週末練習',
-    eventTime: createEventTime(2, 19, 0),
+    eventTime: createEventTime(5, 19, 0),
     amount: '300',
     duration: '2',
     notes: '記得帶水和毛巾',
@@ -47,7 +47,7 @@ export const mockEvents: EventViewModel[] = [
     location: mockLocations[0],
     users: [mockUsers[0], mockUsers[1], mockUsers[2]],
     timeLabel: formatEventTimeToTimeLabel(
-      createEventTime(2, 19, 0),
+      createEventTime(5, 19, 0),
       2,
     ),
     reminder3dSent: false,
@@ -58,7 +58,7 @@ export const mockEvents: EventViewModel[] = [
   {
     id: '2',
     title: '進階訓練',
-    eventTime: createEventTime(-6, 19, 0),
+    eventTime: createEventTime(0, new Date().getHours(), 0),
     amount: '400',
     duration: '3',
     notes: '高難度動作練習',
@@ -67,7 +67,7 @@ export const mockEvents: EventViewModel[] = [
     location: mockLocations[1],
     users: [mockUsers[1], mockUsers[3], mockUsers[4]],
     timeLabel: formatEventTimeToTimeLabel(
-      createEventTime(-6, 19, 0),
+      createEventTime(0, new Date().getHours(), 0),
       2,
     ),
     reminder3dSent: false,
@@ -78,7 +78,7 @@ export const mockEvents: EventViewModel[] = [
   {
     id: '3',
     title: '戶外練習',
-    eventTime: createEventTime(-10, 18, 0),
+    eventTime: createEventTime(-7, 18, 0),
     amount: '0',
     duration: '2',
     notes: '在公園練習，免費',
@@ -87,7 +87,7 @@ export const mockEvents: EventViewModel[] = [
     location: mockLocations[1],
     users: [mockUsers[0], mockUsers[2], mockUsers[3], mockUsers[4]],
     timeLabel: formatEventTimeToTimeLabel(
-      createEventTime(-10, 18, 0),
+      createEventTime(-7, 18, 0),
       2,
     ),
     reminder3dSent: false,
