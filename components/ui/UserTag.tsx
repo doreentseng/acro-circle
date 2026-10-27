@@ -6,6 +6,7 @@ const tagColors = [
   'bg-red-100 text-red-900 dark:bg-red-900/30 dark:text-red-200',
   'bg-purple-100 text-purple-900 dark:bg-purple-900/30 dark:text-purple-200',
   'bg-blue-100 text-blue-900 dark:bg-blue-900/30 dark:text-blue-200',
+  'bg-pink-100 text-pink-900 dark:bg-pink-900/30 dark:text-pink-200',
 ];
 
 const defaultTagColor =
