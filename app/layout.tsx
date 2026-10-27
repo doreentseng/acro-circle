@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Acro Circle',
-  description: 'For Acro Team!',
+  title: '肌力失重俱樂部',
+  description: 'Acroyoga, Strength Training, and Movement for Us!',
   icons: {
     icon: 'favicon.ico',
   },
