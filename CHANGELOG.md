@@ -1,3 +1,10 @@
+### 2.6.6 - [2026-10-27]
+
+### Changes
+
+- Update website page title and description for Gravity-Free Strength Club
+- Add pink to the UI badge color palette
+
 ### 2.6.5 - [2026-07-01]
 
 ### Improvements
