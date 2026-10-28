@@ -19,20 +19,21 @@ import {
 } from '@/lib/styles/form';
 import { cardClass } from '@/lib/styles/card';
 import { buttonClass, primary } from '@/lib/styles/button';
+import { TemplateSection } from '@/components/TemplateSection';
 import { useToast } from '@/providers/ToastProvider';
 import { Alert } from './ui/Alert';
 import GroupNotificationNotice from '@/components/GroupNotificationNotice';
 import { useAuth } from '@/providers/AuthProvider';
 
 const EMPTY_FORM = {
-  title: 'Acroyoga 練習',
+  title: '',
   createdBy: '',
   eventTime: '',
   bookedBy: '',
   locationId: '',
   userIds: [],
-  amount: '1000',
-  duration: '2',
+  amount: '',
+  duration: '',
   notes: '',
 };
 
@@ -136,6 +137,14 @@ export default function CreateEventSection({
         <SectionTitle
           icon={<BoltIcon className="w-5 h-5" />}
           title="預約表單"
+        />
+
+        <TemplateSection
+          disabled={isCreating}
+          onApply={(v) => setForm(prev => ({
+            ...prev,
+            ...v
+          }))}
         />
 
         <FormField label="標題" required error={formErrors.title}>
