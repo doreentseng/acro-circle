@@ -1,3 +1,9 @@
+### 2.6.7 - [2026-10-28]
+
+### Added
+
+- Event form templates
+
 ### 2.6.6 - [2026-10-27]
 
 ### Changes
